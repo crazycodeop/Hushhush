@@ -1,5 +1,6 @@
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
+const CryptoJS = require("crypto-js");
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -27,10 +28,27 @@ export default async function handler(req, res) {
                 if (IfUserExists) {
                     res.status(400).json({ message: "User already exists" });
                 } else {
-                    const user = await User.create(
-                        req.body
-                    ); /* create a new document in the database */
-                    console.log(user, "response");
+                    const { email, ImageUrls, selectedImages, username } =
+                        req.body;
+                    const selectedImagesUrl = selectedImages?.reduce(
+                        (acc, curr) => {
+                            acc = `${acc}|${curr.id}${curr.imageURL}|`;
+                            return acc;
+                        },
+                        ""
+                    );
+                    const hashValue =
+                        CryptoJS.SHA256(selectedImagesUrl).toString();
+
+                    /* create a new document in the database */
+                    const user = await User.create({
+                        email,
+                        username,
+                        ImageUrls,
+                        hashedSelectedImagesUrl: hashValue,
+                    });
+                    console.log(user, "usercreated");
+                    console.log(hashValue, "hashValue");
                     res.status(201).json({ success: true, data: user });
                 }
             } catch (error) {

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 // import "@fontsource/sen/400.css";
 // import "@fontsource/sen/700.css";
 import "../styles/SetuFonts.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 // INTERFACE  =================================================================
 import { ThemeProvider, ContentWrapper } from "fictoan-react";
@@ -62,6 +64,12 @@ function MyApp({ Component, pageProps }) {
 
             {getLayout(<Component {...modifiedPageProps}></Component>)}
             {/* <Footer /> */}
+            <ToastContainer
+                theme="light"
+                position="top-right"
+                autoClose={800}
+                draggable
+            />
         </ThemeProvider>
     );
 }

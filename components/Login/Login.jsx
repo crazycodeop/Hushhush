@@ -41,6 +41,7 @@ import { PasswordModal } from "../PasswordModal/PasswordModal";
 import { ImageGrid } from "../ImageGrid/ImageGrid";
 import axios from "axios";
 import { shuffleArr } from "@/utils";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const router = useRouter();
@@ -62,6 +63,7 @@ const Login = () => {
     const getUserData = async () => {
         console.log(email, "email");
         try {
+            setIsLoading(true);
             const { data } = await axios.post("/api/login", {
                 username: userName,
                 email: email,
@@ -69,12 +71,14 @@ const Login = () => {
             const userAllImagesSet = shuffleArr(data?.data);
             setImageSet(userAllImagesSet);
             if (userAllImagesSet) {
+                setIsLoading(false);
                 setIsSearchModalVisible(true);
             }
         } catch (error) {
+            setIsLoading(false);
             setImageSet([]);
             setIsSearchModalVisible(false);
-            console.log(error?.response?.data.message, "ERROR");
+            toast(error?.response?.data.message);
         }
     };
 
@@ -105,10 +109,14 @@ const Login = () => {
                     className="row-heading"
                 >
                     <Portion className="img-container-text">
-                        <Heading as="h1" textColor="white">
+                        <Heading
+                            as="h1"
+                            textColor="white"
+                            className="primary-heading"
+                            marginBottom="medium"
+                        >
                             Taking Authentication to the next level
                         </Heading>
-                        {/* <SetuLogo width={130} height={45} /> */}
                     </Portion>
                 </Row>
             </Element>
@@ -128,6 +136,7 @@ const Login = () => {
                             <ImageGrid
                                 showCategory={false}
                                 initialImageSet={imageSet}
+                                context="LOGIN"
                             />
 
                             <Element as="div" marginTop="nano">
@@ -194,7 +203,7 @@ const Login = () => {
                                         type="submit"
                                         shadow="hard"
                                         marginRight="micro"
-                                        // isLoading={isLoading}
+                                        isLoading={isLoading}
                                         data-testid="login-button"
                                     >
                                         For Password -&gt;

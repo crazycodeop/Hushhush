@@ -45,6 +45,7 @@ import { APIURL } from "@/config/data";
 import { Spinner } from "fictoan-react";
 import { useCallback } from "react";
 import { shuffleArr } from "@/utils";
+import { toast } from "react-toastify";
 
 const hts = [
     {
@@ -634,6 +635,7 @@ const SignUp = () => {
     const setUserName = useAuthStore((state) => state.setUserName);
     const email = useAuthStore((state) => state.email);
     const setEmail = useAuthStore((state) => state.setEmail);
+    const [isLoading, setIsLoading] = useState(false);
 
     console.log(email, "asd");
     const [signUpError, setSignUpError] = useState("");
@@ -662,9 +664,28 @@ const SignUp = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    const checkUser = async () => {
+        try {
+            setIsLoading(true);
+            const response = await axios.post("/api/check-user", {
+                username: userName,
+                email: email,
+            });
 
-    const handleSubmit = () => {
-        setIsSearchModalVisible(true);
+            if (response.status === 201) {
+                setIsLoading(false);
+                setIsSearchModalVisible(true);
+            }
+        } catch (error) {
+            setIsLoading(false);
+            setIsSearchModalVisible(false);
+            toast.error(error?.response?.data.message);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        checkUser();
     };
 
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
@@ -743,6 +764,7 @@ const SignUp = () => {
                                 <ImageGrid
                                     showCategory={true}
                                     initialImageSet={imageSet}
+                                    context="SIGNUP"
                                 />
                             ) : (
                                 <Spinner />
@@ -777,7 +799,7 @@ const SignUp = () => {
 
                             <FormWrapper
                                 spacing="none"
-                                onSubmit={() => handleSubmit()}
+                                onSubmit={(e) => handleSubmit(e)}
                             >
                                 <InputField
                                     className="search-field"
@@ -825,6 +847,7 @@ const SignUp = () => {
                                         shadow="hard"
                                         marginRight="micro"
                                         data-testid="signUp-button"
+                                        isLoading={isLoading}
                                         type="submit"
                                     >
                                         Set Password

@@ -9,7 +9,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
     },
     ImageUrls: [{ id: Number, imageURL: String }],
-    selectedImages: [{ id: Number, imageURL: String }],
+    hashedSelectedImagesUrl: {
+        type: String,
+    },
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import {
     Button,
     Card,
@@ -17,6 +18,7 @@ import { getRandomInt, shuffleArr } from "@/utils";
 import { ImageGridStyled } from "./ImageGrid.styled";
 import { APIURL } from "@/config/data";
 import { useAuthStore } from "@/store/store";
+import { toast } from "react-toastify";
 
 const hts = [
     {
@@ -600,37 +602,42 @@ const hts = [
     },
 ];
 
-export function ImageGrid({ showCategory = false, initialImageSet }) {
+export function ImageGrid({ showCategory = false, initialImageSet, context }) {
+    const router = useRouter();
     const [keywordInput, setKeywordInput] = useState("random");
     const userName = useAuthStore((state) => state.userName);
     const email = useAuthStore((state) => state.email);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [selectedImages, setSelectedImages] = useState([]);
 
     const [imageSet, setImageSet] = useState(initialImageSet || []);
-
-    const fetchData = useCallback(async () => {
-        const { data } = await axios.get(
-            `${APIURL}${encodeURIComponent("random")}&image_type=photo`
-        );
-
-        const allImages = hts.reduce((acc, curr) => {
-            acc.push({ id: curr.id, imageURL: curr.webformatURL });
-            return acc;
-        }, []);
-
-        // const allImages = data.hits.reduce((acc, curr) => {
-        // 	acc.push({ id: curr.id, imageURL: curr.webformatURL });
-        // 	return acc;
-        // }, []);
-        const reducedImages = shuffleArr(allImages);
-        const totalImages = reducedImages.splice(0, 9);
-        setImageSet(totalImages);
-    }, []);
-
-    useEffect(() => {
-        // fetchData();
-    }, [fetchData]);
+    const handleSubmit = (e) => {
+        if (context === "LOGIN") {
+            matchPasswordHandle(e);
+        } else {
+            createUserData();
+        }
+    };
+    const matchPasswordHandle = async (e) => {
+        e.preventDefault();
+        try {
+            setIsLoading(true);
+            const res = await axios.post("/api/password", {
+                email,
+                selectedImages,
+            });
+            if (res.status === 200) {
+                toast.success("Logged in successfully");
+                setIsLoading(false);
+                router.push("/");
+            }
+        } catch (error) {
+            setIsLoading(false);
+            toast.error(error?.response?.data.message);
+            console.log(error, "error");
+        }
+    };
 
     useEffect(() => {
         return () => {
@@ -671,8 +678,7 @@ export function ImageGrid({ showCategory = false, initialImageSet }) {
 
     const createUserData = async () => {
         try {
-            console.log(userName, email, "asffas");
-
+            setIsLoading(true);
             const res = await axios.post("/api/user", {
                 username: userName,
                 email,
@@ -681,11 +687,18 @@ export function ImageGrid({ showCategory = false, initialImageSet }) {
             });
 
             // Throw error with status code in case Fetch API req failed
-            if (!res.ok) {
-                throw new Error(res.status);
+            if (res.status === 201) {
+                setIsLoading(false);
+                toast.success("Signed up successfully");
+                router.push("/");
+            }
+            if (res.status === 400) {
+                toast.error("User already Exists");
+                setIsLoading(false);
             }
         } catch (error) {
-            // setMessage("Failed to add pet");
+            toast.error(error.response.data.message);
+            setIsLoading(false);
         }
     };
     return (
@@ -768,7 +781,8 @@ export function ImageGrid({ showCategory = false, initialImageSet }) {
                 <Button
                     kind="primary"
                     disabled={selectedImages.length === 0 ? true : false}
-                    onClick={() => createUserData()}
+                    isLoading={isLoading}
+                    onClick={(e) => handleSubmit(e)}
                 >
                     Submit
                 </Button>
