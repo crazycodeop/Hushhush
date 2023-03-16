@@ -38,6 +38,7 @@ import { LoginStyled } from "./Login.styled";
 import { useToggle } from "@/hooks/useToggle";
 import { useForm } from "react-hook-form";
 import { PasswordModal } from "../PasswordModal/PasswordModal";
+import axios from "axios";
 
 const Login = () => {
     const router = useRouter();
@@ -69,6 +70,23 @@ const Login = () => {
         setIsSearchModalVisible((curr) =>
             typeof type === "boolean" ? type : !curr
         );
+    };
+
+    const postData = async () => {
+        try {
+            console.log(userName, email, "asffas");
+            const res = await axios.post("/api/user", {
+                username: userName,
+                email: email,
+            });
+
+            // Throw error with status code in case Fetch API req failed
+            if (!res.ok) {
+                throw new Error(res.status);
+            }
+        } catch (error) {
+            // setMessage("Failed to add pet");
+        }
     };
 
     return (
@@ -165,7 +183,7 @@ const Login = () => {
                                     marginRight="micro"
                                     isLoading={isLoading}
                                     data-testid="login-button"
-                                    onClick={() => toggleSearchModal(true)}
+                                    onClick={() => postData()}
                                 >
                                     Set Password
                                 </Button>
