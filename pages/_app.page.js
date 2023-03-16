@@ -1,5 +1,8 @@
 // EXTERNAL DEPS  =============================================================
 import React, { useState } from "react";
+import "@fontsource/sen/400.css";
+import "@fontsource/sen/700.css";
+import "../styles/SetuFonts.css";
 
 // INTERFACE  =================================================================
 import { ThemeProvider, ContentWrapper } from "fictoan-react";
@@ -57,16 +60,8 @@ function MyApp({ Component, pageProps }) {
             <GlobalStyle />
             {/* <SiteHeader /> */}
 
-            {/* <Sidebar
-                // toggleTheme={toggleTheme}
-                primarySidebarItems={primarySidebarItems}
-                secondarySidebarItems={secondarySidebarItems}
-            /> */}
-
-            <ContentWrapper id="content-wrapper">
-                {getLayout(<Component {...modifiedPageProps}></Component>)}
-                {/* <Footer /> */}
-            </ContentWrapper>
+            {getLayout(<Component {...modifiedPageProps}></Component>)}
+            {/* <Footer /> */}
         </ThemeProvider>
     );
 }

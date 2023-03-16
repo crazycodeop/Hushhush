@@ -13,6 +13,44 @@ export const CrucibleLightTheme = {
     globals: {
         borderWidth: "1px",
     },
+    Search: {
+        Icon: {
+            default: {
+                stroke: defaultColours.slate60,
+            },
+        },
+        ResultsWrapper: {
+            bg: defaultColours.slate10,
+        },
+        ResultCard: {
+            highlight: {
+                bg: defaultColours.yellow50,
+            },
+            default: {
+                bg: defaultColours.white,
+            },
+            isSelected: {
+                bg: `${lighten(0.4, setuColours.flashTurk)}`,
+                border: setuColours.flashTurk,
+            },
+        },
+        ResultName: {
+            default: {
+                text: `${lighten(0.16, setuColours.murkyNight)}`,
+            },
+            isSelected: {
+                text: `${lighten(0.16, setuColours.murkyNight)}`,
+            },
+        },
+        ResultPath: {
+            default: {
+                text: defaultColours.slate60,
+            },
+            isSelected: {
+                text: defaultColours.slate60,
+            },
+        },
+    },
 
     //  TEXT  /////////////////////////////////////////////////////////////////
     text: {

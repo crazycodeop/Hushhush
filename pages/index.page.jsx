@@ -1,10 +1,20 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Login from "@/components/Login/Login";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    // useEffect(() => {
+    //     const response = fetch("/api/route-name", {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     });
+    //     console.log(response, "Response");
+    // }, []);
     return (
         <>
             <Head>
@@ -19,7 +29,9 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>HELLO</main>
+            <main>
+                <Login></Login>
+            </main>
         </>
     );
 }

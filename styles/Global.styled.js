@@ -2,7 +2,10 @@ import { createGlobalStyle } from "styled-components";
 import { setuColours, SetuColoursCSS } from "./SetuColors";
 
 export const GlobalStyle = createGlobalStyle`
+
+
     ${SetuColoursCSS}
+
 
     h1, h2, h3 { line-height : 1; }
 
@@ -10,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
 
     p { margin : 0; }
 
-    div[class*="border"] { border-width : 1px !important; }
+    div[class*="border"] { border-width : 11px !important; }
 
     .theme-toggle {
         position        : fixed;
@@ -38,7 +41,7 @@ export const GlobalStyle = createGlobalStyle`
 
     //  SIDEBAR + CONTENT WRAPPER  ////////////////////////////////////////////
     #content-wrapper {
-        margin-left : 64px;
+        /* margin-left : 64px; */
         //width       : calc(100% - 64px);
     }
 
