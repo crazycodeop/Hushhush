@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const LoginStyled = styled(motion.article)`
+export const SignUpStyled = styled(motion.article)`
 	display: grid;
 	height: 100vh;
 	padding-bottom: 0;
@@ -52,18 +52,17 @@ export const LoginStyled = styled(motion.article)`
 		grid-template-columns: repeat(24, 1fr);
 	}
 
-	.grid-page {
-		align-items: center;
-		justify-content: center;
-		display: flex;
-		flex-direction: column;
-	}
-
 	.button-group {
 		display: flex;
 		flex-direction: column;
 		button {
 			max-width: max-content;
 		}
+	}
+	.grid-page {
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
 	}
 `;

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-/* PetSchema will correspond to a collection in your MongoDB database. */
+/* UserSchema will correspond to a collection in your MongoDB database. */
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
     },
+    ImageUrls: [{ id: Number, imageURL: String }],
+    selectedImages: [{ id: Number, imageURL: String }],
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

@@ -1,7 +1,7 @@
 // EXTERNAL DEPS  =============================================================
 import React, { useState } from "react";
-import "@fontsource/sen/400.css";
-import "@fontsource/sen/700.css";
+// import "@fontsource/sen/400.css";
+// import "@fontsource/sen/700.css";
 import "../styles/SetuFonts.css";
 
 // INTERFACE  =================================================================

@@ -38,55 +38,49 @@ import { LoginStyled } from "./Login.styled";
 import { useToggle } from "@/hooks/useToggle";
 import { useForm } from "react-hook-form";
 import { PasswordModal } from "../PasswordModal/PasswordModal";
+import { ImageGrid } from "../ImageGrid/ImageGrid";
 import axios from "axios";
+import { shuffleArr } from "@/utils";
 
 const Login = () => {
     const router = useRouter();
     const currentYear = new Date().getFullYear();
-    const [step, setStep] = useState("first_factor");
-    const [otp, setOtp] = useState("");
     // const [showPassword, setShowPassword] = useToggle();
     const [email, setEmail] = useState("");
     const [userName, setUserName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [loginError, setLoginError] = useState("");
-    const { control, handleSubmit, formState, watch } = useForm({
-        defaultValues: {
-            email: "",
-            password: "",
-        },
-    });
+    const [imageSet, setImageSet] = useState([]);
 
-    const onLoginSubmit = (loginData) => {
-        onSubmit(loginData);
-    };
+    const [loginError, setLoginError] = useState("");
 
     const onSubmit = (loginData) => {
         setIsLoading(true);
     };
 
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-    const toggleSearchModal = (type) => {
-        setIsSearchModalVisible((curr) =>
-            typeof type === "boolean" ? type : !curr
-        );
-    };
 
-    const postData = async () => {
+    const getUserData = async () => {
+        console.log(email, "email");
         try {
-            console.log(userName, email, "asffas");
-            const res = await axios.post("/api/user", {
+            const { data } = await axios.post("/api/login", {
                 username: userName,
                 email: email,
             });
-
-            // Throw error with status code in case Fetch API req failed
-            if (!res.ok) {
-                throw new Error(res.status);
+            const userAllImagesSet = shuffleArr(data?.data);
+            setImageSet(userAllImagesSet);
+            if (userAllImagesSet) {
+                setIsSearchModalVisible(true);
             }
         } catch (error) {
-            // setMessage("Failed to add pet");
+            setImageSet([]);
+            setIsSearchModalVisible(false);
+            console.log(error?.response?.data.message, "ERROR");
         }
+    };
+
+    const onLoginSubmit = (e) => {
+        e.preventDefault();
+        return getUserData();
     };
 
     return (
@@ -100,23 +94,20 @@ const Login = () => {
                 <title>Sign in to Setu — Setu</title>
             </Head>
 
-            {/* <Element as="div"></Element> */}
-
             {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* LHS CONTENT */}
             {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Element as="section" id="left-side-content" bgColour="slate-20">
-                <Row isFullHeight>
+                <Row
+                    gutters="medium"
+                    isFullHeight
+                    isFullWidth
+                    className="row-heading"
+                >
                     <Portion className="img-container-text">
-                        <Element
-                            as="div"
-                            className="hero-heading"
-                            horizontallyCenterThis
-                        >
-                            <Heading as="h1" className="primary-heading">
-                                Taking Authentication to the next level
-                            </Heading>
-                        </Element>
+                        <Heading as="h1" textColor="white">
+                            Taking Authentication to the next level
+                        </Heading>
                         {/* <SetuLogo width={130} height={45} /> */}
                     </Portion>
                 </Row>
@@ -125,118 +116,138 @@ const Login = () => {
             {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* RHS FORM */}
             {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            <Element as="section" id="right-side-content">
-                <Row sidePadding="medium" marginTop="small">
+
+            {isSearchModalVisible ? (
+                <Row sidePadding="micro" paddingTop="small">
                     <Portion>
-                        <Heading
-                            as="h2"
-                            marginBottom="tiny"
-                            marginTop="medium"
-                            data-testid="heading"
-                            style={{ fontWeight: "700" }}
+                        <Element
+                            as="div"
+                            className="grid-page"
+                            marginTop="small"
                         >
-                            Login
-                        </Heading>
-
-                        <FormWrapper
-                            spacing="none"
-                            onSubmit={handleSubmit(onLoginSubmit)}
-                        >
-                            <InputField
-                                className="search-field"
-                                name="search"
-                                placeholder="Username"
-                                autoComplete="off"
-                                autoFocus
-                                onChange={(e) => setUserName(e.target.value)}
-                                value={userName}
-                                tabIndex={0}
-                            />
-                            <InputField
-                                className="search-field"
-                                name="search"
-                                placeholder="Email"
-                                autoComplete="off"
-                                autoFocus
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                                tabIndex={0}
+                            <ImageGrid
+                                showCategory={false}
+                                initialImageSet={imageSet}
                             />
 
-                            {loginError && (
-                                <Text
-                                    marginBottom="micro"
-                                    textColour="red"
-                                    data-testid="login-error-text"
+                            <Element as="div" marginTop="nano">
+                                <a
+                                    onClick={() =>
+                                        setIsSearchModalVisible(false)
+                                    }
                                 >
-                                    {loginError}
-                                </Text>
-                            )}
-                            <Element
-                                as="div"
-                                verticallyCentreItems
-                                marginTop="micro"
-                            >
-                                <Button
-                                    kind="primary"
-                                    shadow="hard"
-                                    marginRight="micro"
-                                    isLoading={isLoading}
-                                    data-testid="login-button"
-                                    onClick={() => postData()}
-                                >
-                                    Set Password
-                                </Button>
-
-                                {/* <Link href="/forgot-password">
-                                    Forgot password?
-                                </Link> */}
+                                    {" "}
+                                    Go back{" "}
+                                </a>
                             </Element>
-                        </FormWrapper>
-                    </Portion>
-                    {process.env.HIDE_SIGNUP && (
-                        <Portion>
-                            <HRule
-                                kind="secondary"
-                                marginTop="micro"
-                                marginBottom="micro"
-                            />
-
-                            <Text>
-                                New here?{" "}
-                                <Link href="/signup">
-                                    Sign up for an account
-                                </Link>
-                                .
-                            </Text>
-                        </Portion>
-                    )}
-                </Row>
-
-                <Row sidePadding="medium">
-                    <Portion>
-                        <Element as="footer">
-                            <HRule
-                                kind="secondary"
-                                marginTop="micro"
-                                marginBottom="micro"
-                            />
-
-                            <Text isSubtext>
-                                &copy; {currentYear} Hushhush Technologies
-                            </Text>
                         </Element>
                     </Portion>
                 </Row>
-                {isSearchModalVisible &&
-                    createPortal(
-                        <PasswordModal
-                            isSearchModalVisible={isSearchModalVisible}
-                            toggleSearchModal={toggleSearchModal}
-                        />,
-                        document.body
-                    )}
-            </Element>
+            ) : (
+                <Element as="section" id="right-side-content">
+                    <Row sidePadding="micro" marginTop="small">
+                        <Portion>
+                            <Heading
+                                as="h2"
+                                marginBottom="tiny"
+                                marginTop="medium"
+                                data-testid="heading"
+                                style={{ fontWeight: "700" }}
+                            >
+                                Login
+                            </Heading>
+
+                            <FormWrapper
+                                spacing="none"
+                                onSubmit={(e) => onLoginSubmit(e)}
+                            >
+                                <InputField
+                                    className="search-field"
+                                    name="search"
+                                    placeholder="Email"
+                                    autoComplete="off"
+                                    autoFocus
+                                    required
+                                    type="email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    tabIndex={0}
+                                />
+
+                                {loginError && (
+                                    <Text
+                                        marginBottom="micro"
+                                        textColour="red"
+                                        data-testid="login-error-text"
+                                    >
+                                        {loginError}
+                                    </Text>
+                                )}
+                                <Element
+                                    as="div"
+                                    marginTop="micro"
+                                    className="button-group"
+                                >
+                                    <Button
+                                        kind="primary"
+                                        marginBottom="nano"
+                                        type="submit"
+                                        shadow="hard"
+                                        marginRight="micro"
+                                        // isLoading={isLoading}
+                                        data-testid="login-button"
+                                    >
+                                        For Password -&gt;
+                                    </Button>
+
+                                    <Element
+                                        as="div"
+                                        marginTop="nano"
+                                        marginLeft="nano"
+                                    >
+                                        <Link href="/sign-up">
+                                            Create Account -&gt;
+                                        </Link>
+                                    </Element>
+                                </Element>
+                            </FormWrapper>
+                        </Portion>
+                        {process.env.HIDE_SIGNUP && (
+                            <Portion>
+                                <HRule
+                                    kind="secondary"
+                                    marginTop="micro"
+                                    marginBottom="micro"
+                                />
+
+                                <Text>
+                                    New here?{" "}
+                                    <Link href="/signup">
+                                        Sign up for an account
+                                    </Link>
+                                    .
+                                </Text>
+                            </Portion>
+                        )}
+                    </Row>
+
+                    <Row sidePadding="medium">
+                        <Portion>
+                            <Element as="footer">
+                                <HRule
+                                    kind="secondary"
+                                    marginTop="micro"
+                                    marginBottom="micro"
+                                />
+
+                                <Text isSubtext>
+                                    &copy; {currentYear} Hushhush Technologies
+                                </Text>
+                            </Element>
+                        </Portion>
+                    </Row>
+                </Element>
+            )}
         </LoginStyled>
     );
 };

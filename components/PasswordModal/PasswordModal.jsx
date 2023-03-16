@@ -3,6 +3,7 @@ import { PasswordModalStyled } from "./PasswordModal.styled";
 import { Row, Portion, Card, Element } from "fictoan-react";
 import { useEffect, useRef, useState } from "react";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { ImageGrid } from "../ImageGrid/ImageGrid";
 export const PasswordModal = ({ toggleSearchModal }) => {
     const modalRef = useRef(null);
     useOnClickOutside(modalRef, () => toggleSearchModal());
@@ -22,7 +23,7 @@ export const PasswordModal = ({ toggleSearchModal }) => {
                                     as="div"
                                     className="vertically-centre-items"
                                 >
-                                    HELLO
+                                    <ImageGrid />
                                 </Element>
                             </Card>
                         </Portion>
