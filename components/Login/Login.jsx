@@ -139,7 +139,7 @@ const Login = () => {
                                 context="LOGIN"
                             />
 
-                            <Element as="div" marginTop="nano">
+                            <Element as="div" marginTop="micro">
                                 <a
                                     onClick={() =>
                                         setIsSearchModalVisible(false)
