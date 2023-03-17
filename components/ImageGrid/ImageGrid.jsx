@@ -615,6 +615,7 @@ export function ImageGrid({ showCategory = false, initialImageSet, context }) {
     const handleSubmit = (e) => {
         if (context === "LOGIN") {
             matchPasswordHandle(e);
+        } else if ((context = "FORGOT")) {
         } else {
             createUserData();
         }
