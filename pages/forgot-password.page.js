@@ -658,24 +658,6 @@ const SignUp = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    // const checkUser = async () => {
-    //     try {
-    //         setIsLoading(true);
-    //         const response = await axios.post("/api/check-user", {
-    //             username: userName,
-    //             email: email,
-    //         });
-
-    //         if (response.status === 201) {
-    //             setIsLoading(false);
-    //             setIsSearchModalVisible(true);
-    //         }
-    //     } catch (error) {
-    //         setIsLoading(false);
-    //         setIsSearchModalVisible(false);
-    //         toast.error(error?.response?.data.message);
-    //     }
-    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
