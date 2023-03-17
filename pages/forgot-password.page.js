@@ -22,7 +22,7 @@ import {
 // LAYOUTS  ================================================================
 
 // COMPONENTS  ================================================================
-import { SignUpStyled } from "./SignUp.styled";
+import { SignUpStyled } from "../components/SignUp/SignUp.styled";
 
 // UTILS  =====================================================================
 
@@ -36,11 +36,9 @@ import { SignUpStyled } from "./SignUp.styled";
 
 // TYPES  =====================================================================
 
-import { useToggle } from "@/hooks/useToggle";
-import { useForm } from "react-hook-form";
-import { PasswordModal } from "../PasswordModal/PasswordModal";
-import { ImageGrid } from "../ImageGrid/ImageGrid";
-import { useAuthStore } from "../../store/store";
+// import { PasswordModal } from "../components/PasswordModal/PasswordModal";
+import { ImageGrid } from "../components/ImageGrid/ImageGrid";
+import { useAuthStore } from "../store/store";
 import { APIURL } from "@/config/data";
 import { Spinner } from "fictoan-react";
 import { useCallback } from "react";
@@ -651,10 +649,6 @@ const SignUp = () => {
             return acc;
         }, []);
 
-        // const allImages = data.hits.reduce((acc, curr) => {
-        // 	acc.push({ id: curr.id, imageURL: curr.webformatURL });
-        // 	return acc;
-        // }, []);
         const reducedImages = shuffleArr(allImages);
         const totalImages = reducedImages.splice(0, 9);
         setImageSet(totalImages);
@@ -664,34 +658,15 @@ const SignUp = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    const checkUser = async () => {
-        try {
-            setIsLoading(true);
-            const response = await axios.post("/api/check-user", {
-                username: userName,
-                email: email,
-            });
-
-            if (response.status === 201) {
-                setIsLoading(false);
-                setIsSearchModalVisible(true);
-            }
-        } catch (error) {
-            setIsLoading(false);
-            setIsSearchModalVisible(false);
-            toast.error(error?.response?.data.message);
-        }
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        checkUser();
+        setIsSearchModalVisible(true);
     };
 
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const postData = async () => {
         try {
-            console.log(userName, email, "asffas");
             const res = await axios.post("/api/user", {
                 username: userName,
                 email: email,
@@ -714,12 +689,8 @@ const SignUp = () => {
             transition={{ ease: "easeInOut", duration: 0.32 }}
         >
             <Head>
-                <title>Sign in to Setu — Setu</title>
+                <title>forgot password</title>
             </Head>
-
-            {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            {/* LHS CONTENT */}
-            {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Element as="section" id="left-side-content" bgColour="slate-20">
                 <Row
                     gutters="medium"
@@ -740,35 +711,15 @@ const SignUp = () => {
                 </Row>
             </Element>
 
-            {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            {/* RHS FORM */}
-            {/* /////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {isSearchModalVisible ? (
                 <Row sidePadding="micro" paddingTop="small">
                     <Portion>
                         <Element as="div" className="grid-page">
-                            {/* <Element
-								as="div"
-								isFullWidth
-								verticallyCenterItems
-								paddingLeft="nano"
-								paddingRight="nano"
-								marginBottom="micro"
-							>
-								<InputField
-									type="text"
-									placeholder="Type keyword to generate images eg: cat"
-									onChange={(e) => setKeywordInput(e?.target?.value)}
-								/>
-								<Button kind="secondary" size="small" marginLeft="micro">
-									Generate
-								</Button>
-							</Element> */}
                             {imageSet.length ? (
                                 <ImageGrid
                                     showCategory={true}
                                     initialImageSet={imageSet}
-                                    context="SIGNUP"
+                                    context="FORGOT"
                                 />
                             ) : (
                                 <Spinner />
@@ -780,8 +731,7 @@ const SignUp = () => {
                                         setIsSearchModalVisible(false)
                                     }
                                 >
-                                    {" "}
-                                    Go back{" "}
+                                    Go back
                                 </a>
                             </Element>
                         </Element>
@@ -798,26 +748,13 @@ const SignUp = () => {
                                 data-testid="heading"
                                 style={{ fontWeight: "700" }}
                             >
-                                SignUp
+                                Forgot Password
                             </Heading>
 
                             <FormWrapper
                                 spacing="none"
                                 onSubmit={(e) => handleSubmit(e)}
                             >
-                                <InputField
-                                    className="search-field"
-                                    name="search"
-                                    placeholder="Username"
-                                    autoComplete="off"
-                                    autoFocus
-                                    required
-                                    onChange={(e) =>
-                                        setUserName(e.target.value)
-                                    }
-                                    value={userName}
-                                    tabIndex={0}
-                                />
                                 <InputField
                                     className="search-field"
                                     name="search"
@@ -862,7 +799,7 @@ const SignUp = () => {
                                         marginTop="nano"
                                         marginLeft="nano"
                                     >
-                                        <Link href="/">Login -&gt;</Link>
+                                        <Link href="/">back -&gt;</Link>
                                     </Element>
                                 </Element>
                             </FormWrapper>

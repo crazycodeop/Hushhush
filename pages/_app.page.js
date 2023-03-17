@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 // import "@fontsource/sen/400.css";
 // import "@fontsource/sen/700.css";
-import "../styles/SetuFonts.css";
+import "../styles/setuFonts.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 

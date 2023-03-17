@@ -1,6 +1,5 @@
 // EXTERNAL DEPS  =============================================================
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactElement, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
@@ -42,6 +41,7 @@ import { ImageGrid } from "../ImageGrid/ImageGrid";
 import axios from "axios";
 import { shuffleArr } from "@/utils";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Login = () => {
     const router = useRouter();
@@ -145,9 +145,14 @@ const Login = () => {
                                         setIsSearchModalVisible(false)
                                     }
                                 >
-                                    {" "}
                                     Go back{" "}
                                 </a>
+                                <Link
+                                    href="/forgot-password"
+                                    style={{ marginLeft: "1rem" }}
+                                >
+                                    forgot password
+                                </Link>
                             </Element>
                         </Element>
                     </Portion>
@@ -231,8 +236,8 @@ const Login = () => {
 
                                 <Text>
                                     New here?{" "}
-                                    <Link href="/signup">
-                                        Sign up for an account
+                                    <Link href="/sign-up">
+                                        Create Account -&gt;
                                     </Link>
                                     .
                                 </Text>
