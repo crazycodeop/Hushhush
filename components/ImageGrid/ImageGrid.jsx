@@ -630,7 +630,7 @@ export function ImageGrid({ showCategory = false, initialImageSet, context }) {
             if (res.status === 200) {
                 toast.success("Logged in successfully");
                 setIsLoading(false);
-                router.push("/");
+                router.push("/success");
             }
         } catch (error) {
             setIsLoading(false);
