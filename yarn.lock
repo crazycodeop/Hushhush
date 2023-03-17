@@ -1691,9 +1691,9 @@ browserslist@^4.21.3, browserslist@^4.21.5:
     update-browserslist-db "^1.0.10"
 
 bson@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/bson/-/bson-5.0.1.tgz#4cd3eeeabf6652ef0d6ab600f9a18212d39baac3"
-  integrity sha512-y09gBGusgHtinMon/GVbv1J6FrXhnr/+6hqLlSmEFzkz6PodqF6TxjyvfvY3AfO+oG1mgUtbC86xSbOlwvM62Q==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-5.1.0.tgz#7b15cd9aa012b8bf9d320fbaefe15cc2fb657de2"
+  integrity sha512-FEecNHkhYRBe7X9KDkdG12xNuz5VHGeH6mCE0B5sBmYtiR/Ux/9vUH/v4NUoBCDr6NuEhvahjoLiiRogptVW0A==
 
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"
@@ -2393,9 +2393,9 @@ fastq@^1.6.0:
     reusify "^1.0.4"
 
 fictoan-react@^0.45.3:
-  version "0.45.3"
-  resolved "https://registry.yarnpkg.com/fictoan-react/-/fictoan-react-0.45.3.tgz#c1df9c00bfce963014b618fad292e250d48acab9"
-  integrity sha512-ZVJsvDaU8QZt/tqMUvrkD0roqEop5pZHEe+dXUYyONVMrFRzmdpIPE5oHjt+DXCGl2TaTtWyZ/dxXBj++oOwyQ==
+  version "0.45.4"
+  resolved "https://registry.yarnpkg.com/fictoan-react/-/fictoan-react-0.45.4.tgz#3d6b0650cf53b11bfee528af00264911c91b8a0e"
+  integrity sha512-7fkWBiAaGkJdJXiAYb8GPKMESpjtP2eV1J4igODcfXDopkPtqOOvuiPkd8+P4U4yGhFXok5kDNOai+MW+KOLvA==
   dependencies:
     lodash-es "^4.17.21"
     polished "^4.1.3"
@@ -2460,9 +2460,9 @@ form-data@^4.0.0:
     mime-types "^2.1.12"
 
 framer-motion@^10.3.2:
-  version "10.3.2"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.3.2.tgz#9feee03a280bb2fdaac49b80ae46ee81e6e78265"
-  integrity sha512-8GrK3X2vXG/9LJCNJuU5gKxDwSN0VTf7tD6MFP3S9F7rgsUavx+8ZNwhfZfak6maCBBHZ1m86K7TIXpbdfML2w==
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.5.0.tgz#0519193acdd60669ec27fde948a389d8e1f5251b"
+  integrity sha512-84Gh6Ct+KCk82YOnS7oq68IMlqcyaejrj2Xtxmh+CPOi7gqa1SZORZYWMJujQ2Qw0YRM2j1xQQdQo/+BtoQicQ==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
@@ -2640,9 +2640,9 @@ gopd@^1.0.1:
     get-intrinsic "^1.1.3"
 
 graceful-fs@^4.2.4:
-  version "4.2.10"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
-  integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
+  version "4.2.11"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.11.tgz#4183e4e8bf08bb6e05bbb2f7d2e0c8f712ca40e3"
+  integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
 
 grapheme-splitter@^1.0.4:
   version "1.0.4"
