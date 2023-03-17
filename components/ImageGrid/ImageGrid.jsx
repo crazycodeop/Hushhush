@@ -615,7 +615,8 @@ export function ImageGrid({ showCategory = false, initialImageSet, context }) {
     const handleSubmit = (e) => {
         if (context === "LOGIN") {
             matchPasswordHandle(e);
-        } else if ((context = "FORGOT")) {
+        } else if (context === "FORGOT") {
+            updatePassword(e);
         } else {
             createUserData();
         }
@@ -632,6 +633,25 @@ export function ImageGrid({ showCategory = false, initialImageSet, context }) {
                 toast.success("Logged in successfully");
                 setIsLoading(false);
                 router.push("/success");
+            }
+        } catch (error) {
+            setIsLoading(false);
+            toast.error(error?.response?.data.message);
+            console.log(error, "error");
+        }
+    };
+    const updatePassword = async (e) => {
+        e.preventDefault();
+        try {
+            setIsLoading(true);
+            const res = await axios.post("/api/forgot-password", {
+                email,
+                selectedImages,
+            });
+            if (res.status === 201) {
+                toast.success("Password updated");
+                setIsLoading(false);
+                router.push("/");
             }
         } catch (error) {
             setIsLoading(false);
